@@ -11,17 +11,26 @@ function Product({ match }) {
     
     let u = match.params.id            
     const [items, setItems] = useState([])
+    let [types, setTypes] = useState([])
     const [cart, setCart] = useContext(CartContext)
 
     useEffect(() =>{
         fetchItems()
     }, [])
-
+//
     const fetchItems = () => {
          showProducts().then(r => {
             setItems(r.data)
+            items.map(elem => {
+                setTypes([elem.category.name])
+            })
+            types = types.filter((c, index) => {
+                return types.indexOf(c) === index
+            })
         })
     }
+    console.log(types)
+//
     const deleteItem = (id) => {
         del(id).then(r => {           
            swal("DELETED!")           
